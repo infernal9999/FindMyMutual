@@ -1,19 +1,22 @@
-var Csize = 303;
+var Csize;
+var cells;
+var LIMIT;
 var board;
-var index;
-var Player_1;
-var Player_2;
-var Winner;
+var Players;
+var p1;
+var p2;
 
 var cnv;
 var h1;
-var p;
+var h3;
 var s;
 var button;
+var button_add;
+var button_sub;
 
 function centerCanvas() {
    var x = (windowWidth - width) / 2;
-   var y = (windowHeight - height) / 4;
+   var y = (windowHeight - height) / 3;
    cnv.position(x, y);
 
    
@@ -21,9 +24,18 @@ function centerCanvas() {
    button.position((x + (Csize / 2) - 25) , (y + Csize + 60));
    button.mousePressed(reset);
 
+   button_add.position((x + (Csize / 2) - 120) , (y + Csize + 60));
+   button_add.mousePressed(cells_Add);
+
+   button_sub.position((x + (Csize / 2) + 55) , (y + Csize + 60));
+   button_sub.mousePressed(cells_Sub);
+
    var x1 = (windowWidth - 100  - (3 * textWidth(s)));
 
    h1.position(x1, (windowHeight - 100));
+
+   p1.position(x, (y - 60));
+   p2.position((x + Csize - 120), (y - 60));
 }
 
 function windowResized() {
@@ -31,94 +43,71 @@ function windowResized() {
 }
 
 function initialize() {
-	board = new Board(Csize);
+	board = new Board(Csize, cells);
 
-	if (random(1) < 0.5) {
-		index = 0;
-		Player_1 = 0;
-		Player_2 = 1;
-	}
-	else{
-		index = 1;
-		Player_1 = 1;
-		Player_2 = 0;
-	}
+	Players = board.selectPiece();
+
+	p1.html("Player 1: " + Players[0]);
+	p2.html("Player 2: " + Players[1]);
 }
 
 function setup() {
+   Csize = 403;
+   cells = 3;
+   LIMIT = 15;
+
    document.body.style.backgroundColor = color(9, 2, 82);
    
    cnv = createCanvas(Csize, (Csize + 50));
    cnv.style('display', 'block');
    
    button = createButton("Reset").style('border-radius', '8px').style('background-color', 'lime');
-   p = createElement('h3', 'This is a Simple 3x3 Tic-Tac-Toe game made with JavaScript. (Press "r/R" or "Reset" button to reset the game) [UPDATE: UPGRADING SOON...]').style('color', 'White').style('background-color', 'purple');
+
+   button_add = createButton("Add Cell").style('border-radius', '50px').style('background-color', 'coral');
+   button_sub = createButton("Sub Cell").style('border-radius', '50px').style('background-color', 'coral');
+
+   h3 = createElement('h3', 'This is a Simple 3x3 Tic-Tac-Toe game made with JavaScript. (Press "r/R" or "Reset" button to reset the game)').style('color', 'White').style('background-color', 'purple');
    s = "~ by Diptanu Roy";
    h1 = createElement('h1', s).style('color', 'Yellow');
+
+   p1 = createElement('h2', '').style('color', 'Red');
+   p2 = createElement('h2', '').style('color', 'Lime');
+
+   initialize();
    
    centerCanvas();
-   
-   initialize();
 }
 
 function draw() {
-	background(0);
+	//background(0);
 
 	board.show();
-	Winner = board.check_Win();
-	
-	Show_Winner();
-	Show_Player_Turn();
-}
 
-function Show_Player_Turn() {
-	textAlign(CENTER, TOP);
-	textSize(24);
-	fill(255, 0, 255);
-	text("Turn: ", ((width / 2) - textWidth("Player 1")), (height - 35));
-	
-	if (index === Player_1) {
-	   fill(255, 0, 0);
-	   text("Player 1", (width / 2), (height - 35));
-	}
-	else{
-	   fill(0, 255, 0);
-	   text("Player 2", (width / 2), (height - 35));
-	}
-}
-
-function Show_Winner() {
-   textAlign(CENTER, TOP);
-	textSize(24);
-	fill(0, 100, 255);
-	
-	
-	if (Winner == 1) {
-	   if (index === 0) {
-	      index = 1;
-	   }
-	   else{
-	      index = 0;
-	   }
-	   
-	   text("WON", ((width / 2) + textWidth("Player 1") + 10), (height - 35));
-	   noLoop();
-	}
-	
-	if (Winner == 2) {
-	   text("TIE", ((width / 2) + textWidth("Player 1") + 10), (height - 35));
-	   noLoop();
-	}
+   //console.log(cells);
 }
 
 function mousePressed() {
-	index = board.turn(index);
+	board.turn();
 }
 
 function reset() {
    //location.reload();
    initialize();
    loop();
+}
+
+function cells_Add() {
+   if (cells < LIMIT) {
+      cells++;
+      reset();
+   }
+}
+
+function cells_Sub() {
+   if (cells > 3) {
+      cells--;
+      reset();
+   }
 }
 
 function keyPressed() {
