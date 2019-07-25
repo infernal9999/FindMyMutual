@@ -52,7 +52,7 @@ function setup() {
    cnv.style('display', 'block');
    
    button = createButton("Reset").style('border-radius', '8px').style('background-color', 'lime');
-   p = createElement('h3', 'This is a Simple 3x3 Tic-Tac-Toe game made with JavaScript. (Press "r/R" or "Reset" button to reset the game)').style('color', 'White').style('background-color', 'purple');
+   p = createElement('h3', 'This is a Simple 3x3 Tic-Tac-Toe game made with JavaScript. (Press "r/R" or "Reset" button to reset the game) [UPDATE: UPGRADING SOON...]').style('color', 'White').style('background-color', 'purple');
    s = "~ by Diptanu Roy";
    h1 = createElement('h1', s).style('color', 'Yellow');
    
