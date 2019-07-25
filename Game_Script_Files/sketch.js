@@ -66,7 +66,7 @@ function setup() {
    button_add = createButton("Add Cell").style('border-radius', '50px').style('background-color', 'coral');
    button_sub = createButton("Sub Cell").style('border-radius', '50px').style('background-color', 'coral');
 
-   h3 = createElement('h3', 'This is a Simple 3x3 Tic-Tac-Toe game made with JavaScript. (Press "r/R" or "Reset" button to reset the game)').style('color', 'White').style('background-color', 'purple');
+   h3 = createElement('h3', 'This is a Simple Tic-Tac-Toe game made with JavaScript (p5). (Press "r/R" or "Reset" button to reset the game) v1.0').style('color', 'White').style('background-color', 'purple');
    s = "~ by Diptanu Roy";
    h1 = createElement('h1', s).style('color', 'Yellow');
 
