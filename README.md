@@ -1,9 +1,10 @@
 # Tic-Tac-Toe
-Simple 3x3 Tic-Tac-Toe Game
+Simple Tic-Tac-Toe game made with JavaScript (p5)
 
 
 <p align="center">
-  <b>:Sample Picture:</b><br><br>
+  <b>:Sample Pictures:</b><br><br>
   
-  <img src="Sample Picture/Sample.png">
+  <img src="Sample Pictures/Sample 1.png"><br>
+  <img src="Sample Pictures/Sample 2.png">
 </p>
