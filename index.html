@@ -14,3 +14,36 @@
   <body>
   </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  <style>
+    canvas {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tic Tac Toe</h1>
+  
+  <label>
+    <input type="radio" name="gameMode" value="human-computer" checked> Human vs. Computer
+  </label>
+  <label>
+    <input type="radio" name="gameMode" value="human-human"> Human vs. Human
+  </label>
+  
+  <button onclick="startGame()">Start Game</button>
+
+  <script src="p5_Libraries/p5.js" type="text/javascript"></script>
+  <script src="p5_Libraries/p5.dom.js" type="text/javascript"></script>
+  
+  <script src="Game_Script_Files/Board.js" type="text/javascript"></script>
+  <script src="Game_Script_Files/sketch.js" type="text/javascript"></script>
+</body>
+</html>
