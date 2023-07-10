@@ -138,18 +138,3 @@ function update_GSize() {
 
   grd.position((windowWidth - width) / 2 + Csize / 2 - gs, (windowHeight - height) / 3 - 80);
 }
-
-function startGame() {
-  // Get the selected game mode and difficulty
-  var gameMode = document.querySelector('input[name="game-mode"]:checked').value;
-  var difficulty = document.querySelector('input[name="difficulty"]:checked').value;
-
-  // Hide the game settings
-  document.getElementById('game-settings').style.display = 'none';
-
-  // Create the game board with the selected mode and difficulty
-  var board = new Board(403, 3, gameMode, difficulty);
-
-  // Show the game board
-  board.show();
-}
