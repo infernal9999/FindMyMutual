@@ -1,4 +1,4 @@
-function Board(CSize, cells) {
+function Board(CSize, cells, mode, difficulty) {
    this.cells = cells;
    this.mode = mode;
    this.difficulty = difficulty;
