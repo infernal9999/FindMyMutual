@@ -1,5 +1,8 @@
 function Board(CSize, cells) {
    this.cells = cells;
+   this.mode = mode;
+   this.difficulty = difficulty;
+   this.cells = cells;
    
    this.w = round((CSize - 2) /  this.cells);
    
@@ -37,7 +40,7 @@ function Board(CSize, cells) {
    this.boardShow = function() {
       for (var i = 0; i < this.cells; i++) {
          for (var j = 0; j < this.cells; j++) {
-         	stroke(0);
+            stroke(0);
             
             if (this.Onit(this.board[i][j])) {
                fill(150, 150, 255, 255);
