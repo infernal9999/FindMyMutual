@@ -5,7 +5,7 @@ function Board(CSize, cells, mode, difficulty) {
    this.cells = cells;
    
    this.w = round((CSize - 2) /  this.cells);
-   
+
    this.board = [];
    for (var i = 0; i < this.cells; i++) {
       this.board[i] = [];
