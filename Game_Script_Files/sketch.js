@@ -16,6 +16,9 @@ var button;
 var button_add;
 var button_sub;
 
+var gameMode = 'human';
+var difficulty = 'easy';
+
 function centerCanvas() {
    var x = (windowWidth - width) / 2;
    var y = (windowHeight - height) / 3;
@@ -43,15 +46,15 @@ function windowResized() {
 }
 
 function initialize() {
-	board = new Board(Csize, cells);
+   board = new Board(Csize, cells, gameMode, difficulty);
 
-	Players = board.selectPiece();
+   Players = board.selectPiece();
 
-	grd.html(cells + "x" + cells);
-	update_GSize();
+   grd.html(cells + "x" + cells);
+   update_GSize();
 
-	p1.html("Player 1: " + Players[0]);
-	p2.html("Player 2: " + Players[1]);
+   p1.html("Player 1: " + Players[0]);
+   p2.html("Player 2: " + Players[1]);
 }
 
 function setup() {
@@ -87,15 +90,14 @@ function setup() {
 }
 
 function draw() {
-	board.show();
+   board.show();
 }
 
 function mousePressed() {
-	board.turn();
+   board.turn();
 }
 
 function reset() {
-   //location.reload();
    initialize();
    loop();
 }
@@ -122,11 +124,11 @@ function keyPressed() {
 
 function update_GSize() {
    if (cells < 10) {
-		gs = 20.8;
-	}
-	else{
-		gs = (2 * 20.8);
-	}
+      gs = 20.8;
+   }
+   else{
+      gs = (2 * 20.8);
+   }
 
-	grd.position((((windowWidth - width) / 2) + (Csize / 2) - gs), (((windowHeight - height) / 3) - 80));
+   grd.position((((windowWidth - width) / 2) + (Csize / 2) - gs), (((windowHeight - height) / 3) - 80));
 }
