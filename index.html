@@ -67,9 +67,25 @@
 
   <script src="p5_Libraries/p5.js" type="text/javascript"></script>
   <script src="p5_Libraries/p5.dom.js" type="text/javascript"></script>
-  
   <script src="Game_Script_Files/Board.js" type="text/javascript"></script>
   <script src="Game_Script_Files/sketch.js" type="text/javascript"></script>
+
+  <script>
+    function startGame() {
+      // Get the selected game mode and difficulty
+      var gameMode = document.querySelector('input[name="game-mode"]:checked').value;
+      var difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+
+      // Hide the game settings
+      document.getElementById('game-settings').style.display = 'none';
+
+      // Create the game board with the selected mode and difficulty
+      var board = new Board(403, 3, gameMode, difficulty);
+
+      // Show the game board
+      board.show();
+    }
+  </script>
 </body>
 
 </html>
