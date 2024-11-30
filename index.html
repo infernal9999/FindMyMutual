@@ -21,9 +21,17 @@
             display: block;
         }
     </style>
+    <script>
+    window.addEventListener("load", () => {
+        const iframe = document.querySelector("iframe");
+        if (iframe) {
+            const isMobile = window.innerWidth <= 768;
+            iframe.contentWindow.postMessage({ isMobile }, "*");
+        }
+    });
+</script>
 </head>
 <body>
-
-    <iframe id="loginIframe" src="https://script.google.com/macros/s/AKfycbxLk80HJILBs7YxlRdGBPA10tuP58_OGPw4DiFstdlyqE5Wi-cTtLDz4-k2ClJ5Z9g/exec" allowfullscreen></iframe>
+    <iframe id="loginIframe" src="https://script.google.com/macros/s/AKfycbyp_nebX-1-5_KngXwz5ie3nX0P-b65WyPnT1WvRFGlUFxI5zQsrjP_gg9Wmtb3Mj_U/exec" allowfullscreen></iframe>
 </body>
 </html>
