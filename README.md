@@ -32,7 +32,7 @@ Take control with a simple account deactivation option.
 ## **How It Works**
 
 1. **Create an account** through our streamlined registration process.  
-2. **Log in** and input your preferred station codes.  
+2. **Log in**.  
 3. **Browse matches** or wait for email notifications about suitable connections.  
 4. Reach out directly to your mutual match for further discussion.
 
@@ -63,4 +63,4 @@ Take control with a simple account deactivation option.
 
 Click [here](https://infernal9999.github.io/FindMyMutual/) to explore our platform and simplify your search for mutual transfers!
 
-Join **Find My Mutual** today and experience a user-friendly platform built exclusively for railway employees!
+Join **Find My Mutual** today and experience a user-friendly platform built exclusively for Railway employees!
