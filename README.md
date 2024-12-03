@@ -1,6 +1,6 @@
 # **Find My Mutual**
 
-Welcome to **Find My Mutual**, a **free platform** dedicated to simplifying mutual transfers for railway employees. Our solution combines the power of **Google Sheets** and **Google Apps Script** to ensure a seamless experience. The site is hosted on **GitHub Pages**, with the backend deployed via Google Apps Script embedded in an `iframe` for a shorter and more reliable address.
+Welcome to **Find My Mutual**, a **free platform** dedicated to simplifying mutual transfers for Railway employees. Our solution combines the power of **Google Sheets** and **Google Apps Script** to ensure a seamless experience. The site is hosted on **GitHub Pages**, with the backend deployed via Google Apps Script embedded in an `iframe` for a shorter and more reliable address.
 
 ---
 
