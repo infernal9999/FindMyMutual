@@ -10,29 +10,276 @@
         html, body {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .tabs {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab {
+            background-color: white;
+            color: #007BFF;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .tab:hover {
+            background-color: #e0e0e0;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         iframe {
             width: 100%;
-            height: 100%;
+            height: calc(100vh - 120px); /* Adjust for header/footer height */
             border: none;
             display: block;
         }
-    </style>
-    <script>
-    window.addEventListener("load", () => {
-        const iframe = document.querySelector("iframe");
-        if (iframe) {
-            const isMobile = window.innerWidth <= 768;
-            iframe.contentWindow.postMessage({ isMobile }, "*");
+
+        /* Ad container styles */
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+            max-width: 100%;
+            min-height: 90px; /* Adjust height as per AdSense ad sizes */
+            background-color: #f0f0f0; /* Light gray placeholder */
+            border: 1px dashed #ccc; /* Visual indicator for testing */
         }
-    });
-</script>
+
+        .ad-container:empty {
+            display: none; /* Hide the container if no ad is present */
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 10;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .modal-content p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .close-btn {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .close-btn:hover {
+            background-color: #a71d2a;
+        }
+
+        /* Modal fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        /* Mobile View Enhancements */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.5rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header p {
+                font-size: 0.8rem;
+            }
+
+            .tab {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+
+            iframe {
+                height: calc(100vh - 100px); /* Reduced height for mobile */
+            }
+
+            .modal-content {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+
+            .close-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <iframe id="loginIframe" src="https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec" allowfullscreen></iframe>
+    <header>
+        <h1>Find My Mutual</h1>
+        <p>A platform to connect and find mutual transfer partners for railway employees.</p>
+        <div class="tabs">
+            <div class="tab" data-modal="aboutModal">About</div>
+            <div class="tab" data-modal="howItWorksModal">How It Works</div>
+            <div class="tab" data-modal="contactModal">Contact</div>
+        </div>
+    </header>
+    <main>
+        <!-- Ad Placement: Above the iframe -->
+        <div class="ad-container ad-top">
+            <!-- AdSense code will go here -->
+        </div>
+        
+        <iframe id="loginIframe" src="https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec" allowfullscreen></iframe>
+
+        <!-- Ad Placement: Below the iframe -->
+        <div class="ad-container ad-bottom">
+            <!-- AdSense code will go here -->
+        </div>
+    </main>
+
+    <!-- Ad Placement: Between modals and footer -->
+    <div class="ad-container ad-footer">
+        <!-- AdSense code will go here -->
+    </div>
+
+    <!-- Modals -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <h3>About Find My Mutual</h3>
+            <p>Welcome to <b>Find My Mutual</b>, a platform designed to make mutual transfers easier for railway employees. 
+               Register yourself, set your preferences, and explore potential matches for transfer opportunities. 
+               Our app ensures a smooth and hassle-free experience.</p>
+            <button class="close-btn">Close</button>
+        </div>
+    </div>
+
+    <div id="howItWorksModal" class="modal">
+        <div class="modal-content">
+            <h3>How It Works</h3>
+            <p>1. Register your details on the platform.<br>
+               2. Set your preferences for transfer locations.<br>
+               3. Browse through potential matches and connect with them.</p>
+            <button class="close-btn">Close</button>
+        </div>
+    </div>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <h3>Contact Us</h3>
+            <p>For inquiries, reach out to us at:</p>
+            <p><b>findmymutual@gmail.com</b></p>
+            <button class="close-btn">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Find My Mutual | Designed for Railway Employees</p>
+    </footer>
+
+    <script>
+        // Handle modal opening
+        document.querySelectorAll(".tab").forEach(tab => {
+            tab.addEventListener("click", () => {
+                const modalId = tab.getAttribute("data-modal");
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.style.display = "flex";
+                }
+            });
+        });
+
+        // Handle modal closing
+        document.querySelectorAll(".close-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                button.closest(".modal").style.display = "none";
+            });
+        });
+
+        // Close modal when clicking outside content
+        document.querySelectorAll(".modal").forEach(modal => {
+            modal.addEventListener("click", event => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
