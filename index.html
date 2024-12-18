@@ -280,6 +280,20 @@
                 }
             });
         });
+
+        // Check if ads are present in the containers and hide empty ones
+        document.addEventListener("DOMContentLoaded", () => {
+            const adContainers = document.querySelectorAll(".ad-container");
+
+            adContainers.forEach(container => {
+                // Check if the ad container has content (ads)
+                if (!container.innerHTML.trim()) {
+                    container.style.display = "none"; // Hide if empty
+                } else {
+                    container.style.display = "block"; // Show if ads are present
+                }
+            });
+        });
     </script>
 </body>
 </html>
