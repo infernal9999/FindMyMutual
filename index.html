@@ -294,6 +294,13 @@
                 }
             });
         });
+        window.addEventListener("load", () => {
+        const iframe = document.querySelector("iframe");
+        if (iframe) {
+            const isMobile = window.innerWidth <= 768;
+            iframe.contentWindow.postMessage({ isMobile }, "*");
+        }
+    });
     </script>
 </body>
 </html>
