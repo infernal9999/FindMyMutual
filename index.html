@@ -341,28 +341,34 @@
         
             // Make a GET request to verify the URL
             fetch(url, {
+                method: 'GET',
                 mode: 'cors',
                 credentials: 'include'
-                })
-                .then(response => {
-                    console.log(response.text());
-                    if (response.ok) {
-                        setIframeSrc(url);
-                    } else {
-                        iframeError();
-                    }
-                })
-                .catch(error => {
-                    iframeError();
-                });
+            })
+            .then(response => {
+                // Log the response text for debugging
+                response.text().then(text => console.log(text));
+        
+                // Check if the response status is OK (200-299)
+                if (response.ok) {
+                    setIframeSrc(url);
+                } else {
+                    iframeError(); // If the response is not ok (404, 500, etc.), show the error page
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching the URL:', error);
+                iframeError(); // If there's a fetch error (network issue), show the error page
+            });
         }
         
         function setIframeSrc(url) {
             const iframe = document.getElementById('loginIframe');
             const currentSrc = iframe.src;
         
+            // Only set the src if it's different to avoid reloading
             if (currentSrc !== url) {
-                iframe.src = url;  
+                iframe.src = url;
             }
         }
         
@@ -370,13 +376,14 @@
             const iframe = document.getElementById('loginIframe');
             const fallbackSrc = 'maintenance.html';
         
+            // Set the iframe src to maintenance.html if it's not already set
             if (iframe.src !== fallbackSrc) {
                 iframe.src = fallbackSrc;
             }
         }
         
-        // Target URL for iframe
-        const targetSrc = 'https://script.google.com/macros/s/AKfycbydSRSLkLzryHDhXBmKKXGkvE9cdfwLdGKSey4dNm7eNPFpotFqMTNZcNZMmabstMnU/exec';
+        // Target URL for iframe (replace with your URL)
+        const targetSrc = 'https://script.google.com/macros/s/AKfycbwB7ZkHKXEZA6igQcPCa2gC7SkOXJH2pHemuNMWoqnDRiOrKmqr0tOq3owp3vkKAaHw/exec';
         
         // Check and load the iframe URL
         checkIframeURL(targetSrc);
