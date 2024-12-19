@@ -361,18 +361,30 @@
         
         function setIframeSrc(url) {
             const iframe = document.getElementById('loginIframe');
-            iframe.src = url;
-            console.log(`Iframe set to: ${url}`);
+            const currentSrc = iframe.src;
+        
+            if (currentSrc !== url) {
+                iframe.src = url;
+                console.log(`Iframe src set to: ${url}`);
+            } else {
+                console.log('Iframe src is already set correctly.');
+            }
         }
         
         function iframeError() {
             const iframe = document.getElementById('loginIframe');
-            iframe.src = 'maintenance.html'; // Redirect to maintenance page
-            console.log('Iframe redirected to maintenance.html');
+            const fallbackSrc = 'maintenance.html';
+        
+            if (iframe.src !== fallbackSrc) {
+                iframe.src = fallbackSrc;
+                console.log('Iframe redirected to maintenance.html');
+            } else {
+                console.log('Iframe is already redirected to maintenance.html');
+            }
         }
         
         // Target URL for iframe
-        const targetSrc = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec';
+        const targetSrc = 'https://script.google.com/macros/s/AKfycbzhHqUzx4BsIurrTDXwOqvSXP3qMEgIIQytK3AUt_PaxeOyZ7i1lMAs9Ttw5YwLOplB/exec';
         
         // Check and load the iframe URL
         checkIframeURL(targetSrc);
