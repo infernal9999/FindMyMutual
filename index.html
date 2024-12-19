@@ -329,22 +329,36 @@
         function iframeLoaded() {
             const iframe = document.getElementById('loginIframe');
             const currentSrc = iframe.src;
-            const targetSrc = '';
-
+            const targetSrc = ''; // Your target source, could be an empty string or a URL
+        
             // Only set the src if it's not already the target
             if (currentSrc !== targetSrc) {
                 iframe.src = targetSrc;
+        
+                // Check if targetSrc is empty or invalid, and immediately fallback to maintenance.html if needed
+                if (!targetSrc || targetSrc === '') {
+                    iframeError();
+                    return; // Prevent further execution if targetSrc is empty
+                }
+        
+                // Set a timeout to check if iframe is still not loaded (in case of any other loading issues)
+                setTimeout(() => {
+                    const iframeContent = iframe.contentWindow;
+                    if (!iframeContent || iframeContent.location.href === 'about:blank') {
+                        iframeError(); // If iframe didn't load, show maintenance page
+                    }
+                }, 5000); // Timeout after 5 seconds (you can adjust the time)
             }
-
+        
+            // Set error event listener to catch other iframe loading issues
             iframe.onerror = () => {
-                // If there’s an error with the iframe (invalid URL or problem loading)
                 iframeError();
             };
         }
         
         function iframeError() {
             const iframe = document.getElementById('loginIframe');
-            iframe.src = 'maintenance.html';
+            iframe.src = 'maintenance.html'; // Load the maintenance page if there's an error
         }
         
         window.addEventListener("load", () => {
