@@ -299,9 +299,15 @@
 
         function iframeLoaded() {
             const iframe = document.getElementById('loginIframe');
-            iframe.src = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec';
-        }
+            const currentSrc = iframe.src;
+            const targetSrc = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec';
 
+            // Only set the src if it's not already the target
+            if (currentSrc !== targetSrc) {
+                iframe.src = targetSrc;
+            }
+        }
+        
         function iframeError() {
             const iframe = document.getElementById('loginIframe');
             iframe.src = 'maintenance.html';
