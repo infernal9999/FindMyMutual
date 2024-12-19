@@ -337,16 +337,7 @@
                     iframeError();
                 }
                 else {
-                    try {
-                            iframe.src = targetSrc;
-                            const iframeContent = iframe.contentWindow;
-                            
-                            if (!iframeContent || iframeContent.location.href === 'about:blank') {
-                                iframeError();
-                            }
-                        } catch (error) {
-                            iframeError(); 
-                    }
+                    iframe.src = targetSrc;
                 }
             }
             
