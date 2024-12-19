@@ -333,18 +333,20 @@
         });
 
         function checkIframeURL(url) {
+             console.log('here', url);
             // Check if the URL is valid and not empty
             if (!url || url.trim() === '') {
                 iframeError(); // Redirect to maintenance if URL is invalid
                 return;
             }
-        
+            console.log('here1');
             // Make a GET request to verify the URL
             fetch(url, {
                 method: 'GET',
                 mode: 'no-cors', // Disable CORS and block access to the content
-            })
+            }console.log('here2');)
             .then(response => {
+                console.log('here3');
                 console.log('Response Status:', response.status); // Log only the status code (200, 404, etc.)
                 if (response.status === 200) { // Check if the response code is 200 (OK)
                     setIframeSrc(url); // Set the iframe source to the URL if valid
