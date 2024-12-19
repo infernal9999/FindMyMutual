@@ -326,31 +326,36 @@
             });
         });
 
-        function iframeLoaded() {
-            const iframe = document.getElementById('loginIframe');
-            const targetSrc = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec';
-        
-            // Only set the src if it's not already the target
-            if (iframe.src !== targetSrc) {
-                iframe.src = targetSrc;
-        
-                // If targetSrc is empty, call iframeError immediately
-                if (!targetSrc || targetSrc.trim() === '') {
-                    iframeError();
-                    return;
-                }
-        
-                // Listen for iframe loading success and errors
-                iframe.onload = () => {
-                    console.log('Iframe loaded successfully:', targetSrc);
-                    // Assume success since we can't inspect the cross-origin content
-                };
-        
-                iframe.onerror = () => {
-                    console.error('Iframe load failed, redirecting to maintenance.');
-                    iframeError();
-                };
+        function checkIframeURL(url) {
+            // Check if the URL is valid and not empty
+            if (!url || url.trim() === '') {
+                iframeError(); // Redirect to maintenance if URL is invalid
+                return;
             }
+        
+            // Make a HEAD request to verify the URL
+            fetch(url, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        // If the response status is 200-299, set the iframe src
+                        console.log(`URL is valid with status: ${response.status}`);
+                        setIframeSrc(url);
+                    } else {
+                        // If the response is not OK (404, 500, etc.), handle error
+                        console.error(`URL returned an error status: ${response.status}`);
+                        iframeError();
+                    }
+                })
+                .catch(error => {
+                    // Handle fetch errors (network issues, CORS issues, etc.)
+                    console.error('Error while checking URL:', error);
+                    iframeError();
+                });
+        }
+        
+        function setIframeSrc(url) {
+            const iframe = document.getElementById('loginIframe');
+            iframe.src = url;
         }
         
         function iframeError() {
@@ -358,6 +363,9 @@
             iframe.src = 'maintenance.html'; // Redirect to maintenance page
             console.log('Iframe redirected to maintenance.html');
         }
+        
+        const targetSrc = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec';
+        checkIframeURL(targetSrc);
         
         window.addEventListener("load", () => {
         const iframe = document.querySelector("iframe");
