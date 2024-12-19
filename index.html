@@ -325,35 +325,40 @@
                 observer.observe(container, { childList: true, subtree: true });
             });
         });
-        
+
         function iframeLoaded() {
             const iframe = document.getElementById('loginIframe');
             const currentSrc = iframe.src;
-            const targetSrc = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec'; // Your target source, could be an empty string or a URL
+            const targetSrc = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec';
         
             // Only set the src if it's not already the target
             if (currentSrc !== targetSrc) {
                 iframe.src = targetSrc;
         
-                // Check if targetSrc is empty or invalid, and immediately fallback to maintenance.html if needed
-                if (!targetSrc || targetSrc === '') {
+                // If targetSrc is empty, directly call iframeError
+                if (!targetSrc || targetSrc.trim() === '') {
                     iframeError();
-                    return; // Prevent further execution if targetSrc is empty
+                    return;
                 }
         
-                // Set a timeout to check if iframe is still not loaded (in case of any other loading issues)
+                // Set a timeout to validate the iframe's loaded content
                 setTimeout(() => {
-                    const iframeContent = iframe.contentWindow;
-                    if (!iframeContent || iframeContent.location.href === 'about:blank') {
-                        iframeError(); // If iframe didn't load, show maintenance page
+                    const iframeContent = iframe.contentDocument || iframe.contentWindow.document;
+        
+                    // Check if iframe loaded a specific error message or is blank
+                    if (
+                        !iframeContent ||
+                        iframeContent.body.innerHTML.trim() === '' ||
+                        iframeContent.body.innerText.includes('Page Not Found') ||
+                        iframeContent.body.innerText.includes('Sorry, unable to open the file at this time.')
+                    ) {
+                        iframeError();
                     }
-                }, 5000); // Timeout after 5 seconds (you can adjust the time)
+                }, 3000); // Check after 3 seconds (adjust as necessary)
             }
         
-            // Set error event listener to catch other iframe loading issues
-            iframe.onerror = () => {
-                iframeError();
-            };
+            // Attach an error handler for other iframe loading issues
+            iframe.onerror = iframeError;
         }
         
         function iframeError() {
