@@ -209,7 +209,7 @@
         </div>
         
 
-        <iframe id="loginIframe" src="load-animation.html" onload="iframeLoaded()" onerror="iframeError()" allowfullscreen></iframe>
+        <iframe id="loginIframe" src="load-animation.html" allowfullscreen></iframe>
         
         <!-- Ad Placement: Below the iframe -->
         <div class="ad-container ad-bottom" style="display: none;">
@@ -362,12 +362,14 @@
         }
         
         window.addEventListener("load", () => {
-        const iframe = document.querySelector("iframe");
-        if (iframe) {
-            const isMobile = window.innerWidth <= 768;
-            iframe.contentWindow.postMessage({ isMobile }, "*");
-        }
-    });
+            const iframe = document.querySelector("iframe");
+            if (iframe) {
+                const isMobile = window.innerWidth <= 768;
+                iframe.contentWindow.postMessage({ isMobile }, "*");
+            }
+        });
+
+         iframeLoaded();
     </script>
 </body>
 </html>
