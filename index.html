@@ -332,34 +332,26 @@
             });
         });
 
-        function checkIframeURL(url) {
-            // Check if the URL is valid and not empty
-            if (!url || url.trim() === '') {
-                iframeError(); // Redirect to maintenance if URL is invalid
-                return;
-            }
-        
-            // Make a GET request to verify the URL
-            fetch(url, {
-                method: 'GET',
-                mode: 'cors',
-                credentials: 'include'
-            })
-            .then(response => {
-                // Log the response text for debugging
-                response.text().then(text => console.log(text));
-        
-                // Check if the response status is OK (200-299)
-                if (response.ok) {
+        function checkUrl(url) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    console.log("URL is valid:", url);
                     setIframeSrc(url);
                 } else {
-                    iframeError(); // If the response is not ok (404, 500, etc.), show the error page
+                    console.error("URL returned an error status:", xhr.status);
+                    iframeError();
                 }
-            })
-            .catch(error => {
-                console.error('Error fetching the URL:', error);
-                iframeError(); // If there's a fetch error (network issue), show the error page
-            });
+            };
+            
+            xhr.onerror = function() {
+                console.error("Error while trying to access the URL:", url);
+                iframeError();
+            };
+        
+            xhr.send();
         }
         
         function setIframeSrc(url) {
