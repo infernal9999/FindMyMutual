@@ -337,10 +337,11 @@
                     iframeError();
                 }
                 else {
+                    iframe.src = targetSrc;
+                    
                     // Set a timeout to check if iframe is still not loaded (in case of any other loading issues)
                    setTimeout(() => {
                         try {
-                            iframe.src = targetSrc;
                             const iframeContent = iframe.contentWindow;
                             
                             if (!iframeContent || iframeContent.location.href === 'about:blank') {
