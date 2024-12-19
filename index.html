@@ -340,12 +340,14 @@
                     iframeError();
                     return; // Prevent further execution if targetSrc is empty
                 }
-                
-                const iframeContent = iframe.contentWindow;
-                
-                if (!iframeContent || iframeContent.location.href === 'about:blank') {
-                    iframeError(); // If iframe didn't load, show maintenance page
-                }
+        
+                // Set a timeout to check if iframe is still not loaded (in case of any other loading issues)
+                setTimeout(() => {
+                    const iframeContent = iframe.contentWindow;
+                    if (!iframeContent || iframeContent.location.href === 'about:blank') {
+                        iframeError(); // If iframe didn't load, show maintenance page
+                    }
+                }, 5000); // Timeout after 5 seconds (you can adjust the time)
             }
         
             // Set error event listener to catch other iframe loading issues
