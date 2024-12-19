@@ -209,13 +209,7 @@
         </div>
         
 
-        <iframe 
-            id="loginIframe" 
-            src="load-animation.html" 
-            allowfullscreen 
-            referrerpolicy="no-referrer" 
-            crossorigin="anonymous">
-        </iframe>
+        <iframe id="loginIframe" src="load-animation.html" onload="iframeLoaded()" onerror="iframeError()" allowfullscreen></iframe>
         
         <!-- Ad Placement: Below the iframe -->
         <div class="ad-container ad-bottom" style="display: none;">
@@ -332,56 +326,40 @@
             });
         });
 
-        function checkIframeURL(url) {
-             console.log('here', url);
-            // Check if the URL is valid and not empty
-            if (!url || url.trim() === '') {
-                iframeError(); // Redirect to maintenance if URL is invalid
-                return;
-            }
-            console.log('here1');
-            // Make a GET request to verify the URL
-            fetch(url, {
-                method: 'GET',
-                mode: 'no-cors', // Disable CORS and block access to the content
-            })
-            .then(response => {
-                console.log('here2');
-                console.log('Response Status:', response.status); // Log only the status code (200, 404, etc.)
-                if (response.status === 200) { // Check if the response code is 200 (OK)
-                    setIframeSrc(url); // Set the iframe source to the URL if valid
-                } else {
-                    iframeError(); // Redirect to maintenance if not 200
-                }
-            })
-            .catch(error => {
-                iframeError(); // Redirect to maintenance in case of error
-            });
-        }
-        
-        function setIframeSrc(url) {
+        function iframeLoaded() {
             const iframe = document.getElementById('loginIframe');
             const currentSrc = iframe.src;
+            const targetSrc = ''; // Your target source, could be an empty string or a URL
         
-            if (currentSrc !== url) {
-                iframe.src = url;  
+            // Only set the src if it's not already the target
+            if (currentSrc !== targetSrc) {
+                iframe.src = targetSrc;
+        
+                // Check if targetSrc is empty or invalid, and immediately fallback to maintenance.html if needed
+                if (!targetSrc || targetSrc === '') {
+                    iframeError();
+                    return; // Prevent further execution if targetSrc is empty
+                }
+        
+                // Set a timeout to check if iframe is still not loaded (in case of any other loading issues)
+                setTimeout(() => {
+                    const iframeContent = iframe.contentWindow;
+                    if (!iframeContent || iframeContent.location.href === 'about:blank') {
+                        iframeError(); // If iframe didn't load, show maintenance page
+                    }
+                }, 5000); // Timeout after 5 seconds (you can adjust the time)
             }
+        
+            // Set error event listener to catch other iframe loading issues
+            iframe.onerror = () => {
+                iframeError();
+            };
         }
         
         function iframeError() {
             const iframe = document.getElementById('loginIframe');
-            const fallbackSrc = 'maintenance.html';
-        
-            if (iframe.src !== fallbackSrc) {
-                iframe.src = fallbackSrc;
-            }
+            iframe.src = 'maintenance.html'; // Load the maintenance page if there's an error
         }
-        
-        // Target URL for iframe
-        const targetSrc = 'https://script.google.com/macros/s/AKfycbwB7ZkHKXEZA6igQcPCa2gC7SkOXJH2pHemuNMWoqnDRiOrKmqr0tOq3owp3vkKAaHw/exec';
-        
-        // Check and load the iframe URL
-        checkIframeURL(targetSrc);
         
         window.addEventListener("load", () => {
         const iframe = document.querySelector("iframe");
