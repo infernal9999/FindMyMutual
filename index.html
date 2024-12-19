@@ -332,35 +332,37 @@
             });
         });
 
-        function checkUrl(url) {
-            const xhr = new XMLHttpRequest();
-            xhr.open("GET", url, true);
-            
-            xhr.onload = function() {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    console.log("URL is valid:", url);
-                    setIframeSrc(url);
-                } else {
-                    console.error("URL returned an error status:", xhr.status);
-                    iframeError();
-                }
-            };
-            
-            xhr.onerror = function() {
-                console.error("Error while trying to access the URL:", url);
-                iframeError();
-            };
+        function checkIframeURL(url) {
+            // Check if the URL is valid and not empty
+            if (!url || url.trim() === '') {
+                iframeError(); // Redirect to maintenance if URL is invalid
+                return;
+            }
         
-            xhr.send();
+            // Make a GET request to verify the URL
+            fetch(url, {
+                method: 'GET',
+                mode: 'no-cors', // Disable CORS and block access to the content
+            })
+            .then(response => {
+                console.log('Response Status:', response.status); // Log only the status code (200, 404, etc.)
+                if (response.status === 200) { // Check if the response code is 200 (OK)
+                    setIframeSrc(url); // Set the iframe source to the URL if valid
+                } else {
+                    iframeError(); // Redirect to maintenance if not 200
+                }
+            })
+            .catch(error => {
+                iframeError(); // Redirect to maintenance in case of error
+            });
         }
         
         function setIframeSrc(url) {
             const iframe = document.getElementById('loginIframe');
             const currentSrc = iframe.src;
         
-            // Only set the src if it's different to avoid reloading
             if (currentSrc !== url) {
-                iframe.src = url;
+                iframe.src = url;  
             }
         }
         
@@ -368,17 +370,16 @@
             const iframe = document.getElementById('loginIframe');
             const fallbackSrc = 'maintenance.html';
         
-            // Set the iframe src to maintenance.html if it's not already set
             if (iframe.src !== fallbackSrc) {
                 iframe.src = fallbackSrc;
             }
         }
         
-        // Target URL for iframe (replace with your URL)
+        // Target URL for iframe
         const targetSrc = 'https://script.google.com/macros/s/AKfycbwB7ZkHKXEZA6igQcPCa2gC7SkOXJH2pHemuNMWoqnDRiOrKmqr0tOq3owp3vkKAaHw/exec';
         
         // Check and load the iframe URL
-        checkUrl(targetSrc);
+        checkIframeURL(targetSrc);
         
         window.addEventListener("load", () => {
         const iframe = document.querySelector("iframe");
