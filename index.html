@@ -326,10 +326,9 @@
             });
         });
 
-        function iframeLoaded() {
+        function iframeLoaded(targetSrc) {
             const iframe = document.getElementById('loginIframe');
             const currentSrc = iframe.src;
-            const targetSrc = ''; // Your target source, could be an empty string or a URL
         
             // Only set the src if it's not already the target
             if (currentSrc !== targetSrc) {
@@ -369,7 +368,7 @@
             }
         });
 
-         iframeLoaded();
+         iframeLoaded('https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec');
     </script>
 </body>
 </html>
