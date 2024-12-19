@@ -340,6 +340,10 @@
                     iframeError();
                     return;
                 }
+
+                console.log('Iframe source:', iframe.src);
+                console.log('Iframe content:', iframe.contentDocument.body.innerText);
+
         
                 // Set a timeout to validate the iframe's loaded content
                 setTimeout(() => {
