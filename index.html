@@ -335,6 +335,11 @@
             if (currentSrc !== targetSrc) {
                 iframe.src = targetSrc;
             }
+
+            iframe.onerror = () => {
+                // If there’s an error with the iframe (invalid URL or problem loading)
+                iframeError();
+            };
         }
         
         function iframeError() {
