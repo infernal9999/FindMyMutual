@@ -328,46 +328,35 @@
 
         function iframeLoaded() {
             const iframe = document.getElementById('loginIframe');
-            const currentSrc = iframe.src;
             const targetSrc = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec';
         
             // Only set the src if it's not already the target
-            if (currentSrc !== targetSrc) {
+            if (iframe.src !== targetSrc) {
                 iframe.src = targetSrc;
         
-                // If targetSrc is empty, directly call iframeError
+                // If targetSrc is empty, call iframeError immediately
                 if (!targetSrc || targetSrc.trim() === '') {
                     iframeError();
                     return;
                 }
-
-                console.log('Iframe source:', iframe.src);
-                console.log('Iframe content:', iframe.contentDocument.body.innerText);
-
         
-                // Set a timeout to validate the iframe's loaded content
-                setTimeout(() => {
-                    const iframeContent = iframe.contentDocument || iframe.contentWindow.document;
+                // Listen for iframe loading success and errors
+                iframe.onload = () => {
+                    console.log('Iframe loaded successfully:', targetSrc);
+                    // Assume success since we can't inspect the cross-origin content
+                };
         
-                    // Check if iframe loaded a specific error message or is blank
-                    if (
-                        !iframeContent ||
-                        iframeContent.body.innerHTML.trim() === '' ||
-                        iframeContent.body.innerText.includes('Page Not Found') ||
-                        iframeContent.body.innerText.includes('Sorry, unable to open the file at this time.')
-                    ) {
-                        iframeError();
-                    }
-                }, 3000); // Check after 3 seconds (adjust as necessary)
+                iframe.onerror = () => {
+                    console.error('Iframe load failed, redirecting to maintenance.');
+                    iframeError();
+                };
             }
-        
-            // Attach an error handler for other iframe loading issues
-            iframe.onerror = iframeError;
         }
         
         function iframeError() {
             const iframe = document.getElementById('loginIframe');
-            iframe.src = 'maintenance.html'; // Load the maintenance page if there's an error
+            iframe.src = 'maintenance.html'; // Redirect to maintenance page
+            console.log('Iframe redirected to maintenance.html');
         }
         
         window.addEventListener("load", () => {
