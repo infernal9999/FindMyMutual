@@ -333,8 +333,8 @@
                 return;
             }
         
-            // Make a HEAD request to verify the URL
-            fetch(url, { method: 'HEAD' })
+            // Make a GET request to verify the URL
+            fetch(url, { method: 'GET' })
                 .then(response => {
                     if (response.ok) {
                         // If the response status is 200-299, set the iframe src
@@ -356,6 +356,7 @@
         function setIframeSrc(url) {
             const iframe = document.getElementById('loginIframe');
             iframe.src = url;
+            console.log(`Iframe set to: ${url}`);
         }
         
         function iframeError() {
@@ -364,7 +365,10 @@
             console.log('Iframe redirected to maintenance.html');
         }
         
+        // Target URL
         const targetSrc = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec';
+        
+        // Check URL before setting iframe src
         checkIframeURL(targetSrc);
         
         window.addEventListener("load", () => {
