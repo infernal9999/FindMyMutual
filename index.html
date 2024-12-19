@@ -332,8 +332,6 @@
         
             // Only set the src if it's not already the target
             if (currentSrc !== targetSrc) {
-                iframe.src = targetSrc;
-        
                 // Check if targetSrc is empty or invalid, and immediately fallback to maintenance.html if needed
                 if (!targetSrc || targetSrc === '') {
                     iframeError();
@@ -342,6 +340,7 @@
                     // Set a timeout to check if iframe is still not loaded (in case of any other loading issues)
                    setTimeout(() => {
                         try {
+                            iframe.src = targetSrc;
                             const iframeContent = iframe.contentWindow;
                             
                             if (!iframeContent || iframeContent.location.href === 'about:blank') {
