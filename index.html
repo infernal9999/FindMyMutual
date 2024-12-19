@@ -209,7 +209,13 @@
         </div>
         
 
-        <iframe id="loginIframe" src="load-animation.html" onload="checkIframeURL()" onerror="iframeError()" allowfullscreen referrerpolicy="no-referrer" crossorigin="anonymous"></iframe>
+        <iframe 
+            id="loginIframe" 
+            src="load-animation.html" 
+            allowfullscreen 
+            referrerpolicy="no-referrer" 
+            crossorigin="anonymous">
+        </iframe>
         
         <!-- Ad Placement: Below the iframe -->
         <div class="ad-container ad-bottom" style="display: none;">
@@ -365,10 +371,10 @@
             console.log('Iframe redirected to maintenance.html');
         }
         
-        // Target URL
+        // Target URL for iframe
         const targetSrc = 'https://script.google.com/macros/s/AKfycbxtCUj7ZcFq0YdXxkPyuMpsGlxmMngK3CxgiW9kLpRo7ByaPI03_wetC5njLpZU4jr8/exec';
         
-        // Check URL before setting iframe src
+        // Check and load the iframe URL
         checkIframeURL(targetSrc);
         
         window.addEventListener("load", () => {
