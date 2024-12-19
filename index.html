@@ -340,9 +340,13 @@
             }
         
             // Make a GET request to verify the URL
-            fetch(url, { method: 'GET' })
+            fetch(url, {
+                  method: 'GET',
+                  mode: 'cors'  // Ensure CORS mode is enabled
+                })
                 .then(response => {
-                    if (response.status === 200) {
+                    console.log(response.text());
+                    if (response.ok) {
                         setIframeSrc(url);
                     } else {
                         iframeError();
@@ -372,7 +376,7 @@
         }
         
         // Target URL for iframe
-        const targetSrc = 'https://script.google.com/macros/s/AKfycbzhHqUzx4BsIurrTDXwOqvSXP3qMEgIIQytK3AUt_PaxeOyZ7i1lMAs9Ttw5YwLOplB/exec';
+        const targetSrc = 'https://script.google.com/macros/s/AKfycbydSRSLkLzryHDhXBmKKXGkvE9cdfwLdGKSey4dNm7eNPFpotFqMTNZcNZMmabstMnU/exec';
         
         // Check and load the iframe URL
         checkIframeURL(targetSrc);
