@@ -341,8 +341,8 @@
         
             // Make a GET request to verify the URL
             fetch(url, {
-                  method: 'GET',
-                  mode: 'cors'  // Ensure CORS mode is enabled
+                mode: 'cors',
+                credentials: 'include'
                 })
                 .then(response => {
                     console.log(response.text());
