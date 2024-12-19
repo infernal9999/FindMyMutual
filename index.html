@@ -340,6 +340,12 @@
                     iframeError();
                     return; // Prevent further execution if targetSrc is empty
                 }
+                
+                const iframeContent = iframe.contentWindow;
+                
+                if (!iframeContent || iframeContent.location.href === 'about:blank') {
+                    iframeError(); // If iframe didn't load, show maintenance page
+                }
             }
         
             // Set error event listener to catch other iframe loading issues
