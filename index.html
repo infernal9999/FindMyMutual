@@ -209,7 +209,7 @@
         </div>
         
 
-        <iframe id="loginIframe" src="load-animation.html" onload="iframeLoaded()" onerror="iframeError()" allowfullscreen referrerpolicy="no-referrer"></iframe>
+        <iframe id="loginIframe" src="load-animation.html" onload="iframeLoaded()" onerror="iframeError()" allowfullscreen referrerpolicy="no-referrer" crossorigin="anonymous"></iframe>
         
         <!-- Ad Placement: Below the iframe -->
         <div class="ad-container ad-bottom" style="display: none;">
@@ -289,19 +289,28 @@
         // Check if ads are present in the containers and hide empty ones
         document.addEventListener("DOMContentLoaded", () => {
             const adContainers = document.querySelectorAll(".ad-container");
-            
-            // Function to check and toggle visibility of ad containers
+        
+            // Function to check if a container has meaningful content (ignores comments)
+            const hasMeaningfulContent = (container) => {
+                // Check for child nodes that are not comments or whitespace
+                return Array.from(container.childNodes).some(node => 
+                    node.nodeType === Node.ELEMENT_NODE || 
+                    (node.nodeType === Node.TEXT_NODE && node.textContent.trim())
+                );
+            };
+        
+            // Function to toggle visibility based on content
             const toggleAdVisibility = (container) => {
-                if (!container.innerHTML.trim()) {
-                    container.style.display = "none"; // Hide empty containers
+                if (hasMeaningfulContent(container)) {
+                    container.style.display = "block"; // Show if meaningful content exists
                 } else {
-                    container.style.display = "block"; // Show containers with content
+                    container.style.display = "none"; // Hide if empty
                 }
             };
-            
+        
             // Initial check for all ad containers
             adContainers.forEach(toggleAdVisibility);
-            
+        
             // Observe changes to the ad containers
             const observer = new MutationObserver((mutations) => {
                 mutations.forEach((mutation) => {
@@ -310,7 +319,7 @@
                     }
                 });
             });
-            
+        
             // Set observer on all ad containers
             adContainers.forEach((container) => {
                 observer.observe(container, { childList: true, subtree: true });
